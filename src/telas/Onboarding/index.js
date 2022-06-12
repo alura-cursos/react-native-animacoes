@@ -3,6 +3,7 @@ import { View, Text, StatusBar, Image, TouchableOpacity, FlatList } from 'react-
 import FundoOndulado from '../../componentes/FundoOndulado';
 import { TelaDeFundo } from '../../componentes/TelaDeFundo';
 import { Formulario } from '../../componentes/Formulario';
+import { Carrossel } from '../../componentes/Carrossel';
 import itens from './cards';
 import styles from './styles';
 
@@ -30,19 +31,8 @@ export default function Onboarding({ navigation }) {
 
         <View style={styles.carrosselArea}>
           {!fazerLogin && (
-            <FlatList
-              data={itens}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={item => item.id}
-              renderItem={({ item }) => (
-                <Image
-                  source={item.imagem}
-                  style={{ height: '100%', width: 150 }}
-                  resizeMode="contain"
-                />
-              )}
-            />)}
+            <Carrossel data={itens} tempoAnimacao={2000} />
+            )}
         </View>
         <Image
           source={require('../../assets/medica.png')}
