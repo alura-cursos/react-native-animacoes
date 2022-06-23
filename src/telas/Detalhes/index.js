@@ -1,17 +1,39 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView, Button } from 'react-native';
 import { TelaDeFundo } from '../../componentes/TelaDeFundo';
 import { InformacoesUsuario } from '../../componentes/InformacoesUsuario';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import mapa from '../../assets/mapa.png';
 import styles from './styles';
+import Animated, {useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 
 export default function Detalhes(props) {
   const dados = props.route.params;
 
+  const posicao = useSharedValue(0);
+
+  const estiloAnimado = useAnimatedStyle(()=> {
+    return {
+      transform: [
+        {
+          translateX: withSpring(posicao.value)
+        }
+      ]
+    }
+  })
+
+  function alterarPosicaoBloco(){
+    posicao.value = Math.random()* 255;
+  }
+
   return (
     <TelaDeFundo>
       <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+        
+        <Animated.View style={[{ backgroundColor: 'green', width: 50, height: 50 }, estiloAnimado]} />
+
+        <Button title='Mova' onPress={alterarPosicaoBloco} />
+
         <InformacoesUsuario
           nome={dados.nome}
           detalhes="Cliente desde 2018"
